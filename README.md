@@ -3,6 +3,8 @@
 A REST API backend for Uniswap V2 swap estimation that calculates output amounts based on current pool reserves.
 
 ## How to run
+Change the variable `INFURA_URL` in `.env` file according to your Infura project ID.
+
 You can run with docker:
 ```bash
 docker compose up --build
