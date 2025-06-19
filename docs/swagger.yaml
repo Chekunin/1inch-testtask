@@ -1,0 +1,72 @@
+basePath: /
+definitions:
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+      message:
+        type: string
+    type: object
+  models.EstimateResponse:
+    properties:
+      dst_amount:
+        example: "6241000000000000"
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: REST API for Uniswap V2 swap estimation
+  title: Crypto Wallet Backend API
+  version: "1.0"
+paths:
+  /estimate:
+    get:
+      consumes:
+      - application/json
+      description: Estimates the output amount for a Uniswap V2 token swap based on
+        current pool reserves
+      parameters:
+      - description: Uniswap V2 pool address
+        example: 0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852
+        in: query
+        name: pool
+        required: true
+        type: string
+      - description: Source token address
+        example: 0xdAC17F958D2ee523a2206206994597C13D831ec7
+        in: query
+        name: src
+        required: true
+        type: string
+      - description: Destination token address
+        example: 0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+        in: query
+        name: dst
+        required: true
+        type: string
+      - description: Source amount to swap (integer with respect to decimals)
+        example: "10000000"
+        in: query
+        name: src_amount
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EstimateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Calculate swap estimation
+      tags:
+      - estimate
+swagger: "2.0"

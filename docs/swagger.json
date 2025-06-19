@@ -1,0 +1,104 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "REST API for Uniswap V2 swap estimation",
+        "title": "Crypto Wallet Backend API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/estimate": {
+            "get": {
+                "description": "Estimates the output amount for a Uniswap V2 token swap based on current pool reserves",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "estimate"
+                ],
+                "summary": "Calculate swap estimation",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "example": "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852",
+                        "description": "Uniswap V2 pool address",
+                        "name": "pool",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+                        "description": "Source token address",
+                        "name": "src",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+                        "description": "Destination token address",
+                        "name": "dst",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "example": "10000000",
+                        "description": "Source amount to swap (integer with respect to decimals)",
+                        "name": "src_amount",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EstimateResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/models.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.EstimateResponse": {
+            "type": "object",
+            "properties": {
+                "dst_amount": {
+                    "type": "string",
+                    "example": "6241000000000000"
+                }
+            }
+        }
+    }
+}
